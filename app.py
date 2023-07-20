@@ -65,7 +65,7 @@ examples = [
     ],
     # 5-RealisticVision
     [
-        "realisticVisionV40_v20Novae.safetensors", 
+        "realisticVisionV20_v20.safetensors", 
         "mm_sd_v15.ckpt", 
         "photo of coastline, rocks, storm weather, wind, waves, lightning, 8k uhd, dslr, soft lighting, high quality, film grain, Fujifilm XT3",
         "blur, haze, deformed iris, deformed pupils, semi-realistic, cgi, 3d, render, sketch, cartoon, drawing, anime, mutated hands and fingers, deformed, distorted, disfigured, poorly drawn, bad anatomy, wrong anatomy, extra limb, missing limb, floating limbs, disconnected limbs, mutation, mutated, ugly, disgusting, amputation",

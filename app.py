@@ -18,8 +18,7 @@ from animatediff.utils.util import save_videos_grid
 from animatediff.utils.convert_from_ckpt import convert_ldm_unet_checkpoint, convert_ldm_clip_checkpoint, convert_ldm_vae_checkpoint
 
 
-# pretrained_model_path = "models/StableDiffusion/stable-diffusion-v1-5"
-pretrained_model_path = "runwayml/stable-diffusion-v1-5"
+pretrained_model_path = "models/StableDiffusion/stable-diffusion-v1-5"
 inference_config_path = "configs/inference/inference.yaml"
 
 css = """

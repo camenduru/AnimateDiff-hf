@@ -90,7 +90,7 @@ examples = [
 #         print(f"### Cleaning {path} ...")
 #         os.system(f"rm -rf {path}")
 
-os.system(f"rm -rf {os.path.join('models', 'DreamBooth_LoRA', '*.safetensors')}")
+# os.system(f"rm -rf {os.path.join('models', 'DreamBooth_LoRA', '*.safetensors')}")
 
 # os.system(f"bash download_bashscripts/1-ToonYou.sh")
 # os.system(f"bash download_bashscripts/2-Lyriel.sh")

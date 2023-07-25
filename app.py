@@ -152,10 +152,10 @@ class AnimateController:
             for key in f.keys(): base_model_state_dict[key] = f.get_tensor(key)
                 
         converted_vae_checkpoint = convert_ldm_vae_checkpoint(base_model_state_dict, self.vae.config)
-        self.vae.load_state_dict(converted_vae_checkpoint)
+        self.vae.load_state_dict(converted_vae_checkpoint, strict=True)
 
         converted_unet_checkpoint = convert_ldm_unet_checkpoint(base_model_state_dict, self.unet.config)
-        self.unet.load_state_dict(converted_unet_checkpoint, strict=False)
+        self.unet.load_state_dict(converted_unet_checkpoint, strict=True)
 
         self.text_encoder = convert_ldm_clip_checkpoint(base_model_state_dict)
         return gr.Dropdown.update()
@@ -165,7 +165,7 @@ class AnimateController:
         
         motion_module_dropdown = os.path.join(self.motion_module_dir, motion_module_dropdown)
         motion_module_state_dict = torch.load(motion_module_dropdown, map_location="cpu")
-        _, unexpected = self.unet.load_state_dict(motion_module_state_dict, strict=False)
+        _, unexpected = self.unet.load_state_dict(motion_module_state_dict, strict=True)
         assert len(unexpected) == 0
         return gr.Dropdown.update()
     

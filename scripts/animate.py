@@ -64,14 +64,14 @@ def main(args):
             # 1.1 motion module
             motion_module_state_dict = torch.load(motion_module, map_location="cpu")
             if "global_step" in motion_module_state_dict: func_args.update({"global_step": motion_module_state_dict["global_step"]})
-            missing, unexpected = pipeline.unet.load_state_dict(motion_module_state_dict, strict=True)
+            missing, unexpected = pipeline.unet.load_state_dict(motion_module_state_dict, strict=False)
             assert len(unexpected) == 0
             
             # 1.2 T2I
             if model_config.path != "":
                 if model_config.path.endswith(".ckpt"):
                     state_dict = torch.load(model_config.path)
-                    pipeline.unet.load_state_dict(state_dict, strict=True)
+                    pipeline.unet.load_state_dict(state_dict, strict=False)
                     
                 elif model_config.path.endswith(".safetensors"):
                     state_dict = {}
@@ -90,10 +90,10 @@ def main(args):
                     
                     # vae
                     converted_vae_checkpoint = convert_ldm_vae_checkpoint(base_state_dict, pipeline.vae.config)
-                    pipeline.vae.load_state_dict(converted_vae_checkpoint, strict=True)
+                    pipeline.vae.load_state_dict(converted_vae_checkpoint, strict=False)
                     # unet
                     converted_unet_checkpoint = convert_ldm_unet_checkpoint(base_state_dict, pipeline.unet.config)
-                    pipeline.unet.load_state_dict(converted_unet_checkpoint, strict=True)
+                    pipeline.unet.load_state_dict(converted_unet_checkpoint, strict=False)
                     # text_model
                     pipeline.text_encoder = convert_ldm_clip_checkpoint(base_state_dict)
                     

@@ -723,7 +723,7 @@ def convert_ldm_clip_checkpoint(checkpoint):
         if key.startswith("cond_stage_model.transformer"):
             text_model_dict[key[len("cond_stage_model.transformer.") :]] = checkpoint[key]
 
-    text_model.load_state_dict(text_model_dict, strict=True)
+    text_model.load_state_dict(text_model_dict, strict=False)
 
     return text_model
 
@@ -765,7 +765,7 @@ def convert_paint_by_example_checkpoint(checkpoint):
             text_model_dict[key[len("cond_stage_model.transformer.") :]] = checkpoint[key]
 
     # load clip vision
-    model.model.load_state_dict(text_model_dict, strict=True)
+    model.model.load_state_dict(text_model_dict, strict=False)
 
     # load mapper
     keys_mapper = {
@@ -796,7 +796,7 @@ def convert_paint_by_example_checkpoint(checkpoint):
             shape = value.shape[0] // num_splits
             mapped_weights[new_name] = value[i * shape : (i + 1) * shape]
 
-    model.mapper.load_state_dict(mapped_weights, strict=True)
+    model.mapper.load_state_dict(mapped_weights, strict=False)
 
     # load final layer norm
     model.final_layer_norm.load_state_dict(
@@ -811,7 +811,6 @@ def convert_paint_by_example_checkpoint(checkpoint):
         {
             "bias": checkpoint["proj_out.bias"],
             "weight": checkpoint["proj_out.weight"],
-            strict=True
         }
     )
 
@@ -858,7 +857,7 @@ def convert_open_clip_checkpoint(checkpoint):
 
                 text_model_dict[new_key] = checkpoint[key]
 
-    text_model.load_state_dict(text_model_dict, strict=True)
+    text_model.load_state_dict(text_model_dict, strict=False)
 
     return text_model
 
@@ -934,7 +933,7 @@ def stable_unclip_image_noising_components(
                 "std": clip_std,
             }
 
-            image_normalizer.load_state_dict(clip_stats_state_dict, strict=True)
+            image_normalizer.load_state_dict(clip_stats_state_dict, strict=False)
     else:
         raise NotImplementedError(f"Unknown noise augmentor class: {noise_aug_class}")
 
@@ -955,6 +954,6 @@ def convert_controlnet_checkpoint(
         checkpoint, ctrlnet_config, path=checkpoint_path, extract_ema=extract_ema, controlnet=True
     )
 
-    controlnet_model.load_state_dict(converted_ctrl_checkpoint, strict=True)
+    controlnet_model.load_state_dict(converted_ctrl_checkpoint, strict=False)
 
     return controlnet_model
